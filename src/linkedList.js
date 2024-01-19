@@ -1,6 +1,6 @@
 import Node from "./node";
 
-class LinkedList {
+export default class LinkedList {
   constructor(head = null) {
     this.head = head;
   }
@@ -17,6 +17,7 @@ class LinkedList {
   }
 
   get size() {
+    if (!this.head) return new Error("List is empty.");
     let count = 0;
     let node = this.head;
     while (node) {
@@ -27,10 +28,12 @@ class LinkedList {
   }
 
   get headNode() {
+    if (!this.head) return new Error("List is empty.");
     return this.head;
   }
 
   get tailNode() {
+    if (!this.head) return new Error("List is empty.");
     let lastNode = this.head;
     if (lastNode) {
       while (lastNode.next) {
@@ -53,8 +56,60 @@ class LinkedList {
     return new Error(`Node at index ${index} does not exist.`);
   }
 
+  pop() {
+    if (!this.head) return new Error("The list is empty.");
+    let cur = this.head;
+    let tmp = cur;
+    while (cur.next !== null) {
+      tmp = cur;
+      cur = cur.next;
+    }
+    tmp.next = null;
+    if (tmp === cur) {
+      tmp = null;
+      this.head = null;
+    }
+    return tmp;
+  }
+
+  contains(value) {
+    let cur = this.head;
+    while (cur) {
+      if (cur.value === value) return true;
+      cur = cur.next;
+    }
+    return new Error("There are no nodes in the list with the searched value.");
+  }
+
+  indexOf(value) {
+    if (!this.head) return new Error("The list is empty.");
+    let cur = this.head;
+    let curIndex = 0;
+    while (cur) {
+      if (cur.value === value)
+        return `Searched value: ${value}, Index: ${curIndex}`;
+      cur = cur.next;
+      curIndex += 1;
+    }
+    return new Error("There are no nodes in the list with the searched value.");
+  }
+
+  toString() {
+    if (!this.head) return new Error("The list is empty.");
+    let cur = this.head;
+    let string = "";
+    while (cur) {
+      const stringToConcat = `( ${cur.value} ) => `;
+      string = string.concat(stringToConcat);
+      cur = cur.next;
+    }
+    return string.concat("null");
+  }
+
   clear() {
+    if (!this.head) return new Error("The list is empty.");
     this.head = null;
+    return this.head;
   }
 }
 
@@ -64,4 +119,6 @@ const newList = new LinkedList(node1);
 newList.append(5);
 newList.prepend(7);
 newList.append(10);
-console.log(newList.getNodeAt(4));
+newList.prepend(9);
+
+// 9, 7, 3, 5, 10
