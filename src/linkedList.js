@@ -106,6 +106,27 @@ export default class LinkedList {
     return string.concat("null");
   }
 
+  insertAt(value, index) {
+    const newNode = new Node(value);
+    let cur = this.head;
+    let tmp = cur;
+    let track = 0;
+    let indexInRange = false;
+    while (cur) {
+      if (track === index) {
+        tmp.next = newNode;
+        newNode.next = cur;
+        indexInRange = true;
+      }
+      tmp = cur;
+      cur = cur.next;
+      track += 1;
+    }
+    if (!indexInRange)
+      return new Error("Index is outside of the linked list boundries.");
+    return newNode;
+  }
+
   clear() {
     if (!this.head) return new Error("The list is empty.");
     this.head = null;
