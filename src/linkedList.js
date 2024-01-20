@@ -127,19 +127,32 @@ export default class LinkedList {
     return newNode;
   }
 
+  removeAt(index) {
+    let cur = this.head;
+    let tmp = cur;
+    let track = 0;
+    let indexInRange = false;
+    let removedElement;
+    while (cur) {
+      if (track === index) {
+        tmp.next = cur.next;
+        cur.next = null;
+        removedElement = cur;
+        indexInRange = true;
+      }
+      tmp = cur;
+      cur = cur.next;
+      track += 1;
+    }
+    if (!indexInRange)
+      return new Error("Index is outside of the linked list boundries.");
+
+    return removedElement;
+  }
+
   clear() {
     if (!this.head) return new Error("The list is empty.");
     this.head = null;
     return this.head;
   }
 }
-
-const node1 = new Node(3);
-const newList = new LinkedList(node1);
-
-newList.append(5);
-newList.prepend(7);
-newList.append(10);
-newList.prepend(9);
-
-// 9, 7, 3, 5, 10
