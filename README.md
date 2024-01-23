@@ -1,4 +1,4 @@
-# Linked List
+# Linked List (Deployed to `gh-pages`)
 ## `.src/linkedList.js`
 
 ### Implement a "Linked List" data structure with Vanilla Javascript.
